@@ -9,9 +9,14 @@ package com.sanrenxing.tb.components
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	
+	[Event(name="gestureSwipe",type="com.sanrenxing.tb.events.GestureEvent")]
+	
 	public class ProductDetailContainer extends ScrollContainer
 	{
 		private var firY:int;
+		private var firX:int;
+		
+		private var isDispatched:Boolean = false;
 		
 		public function ProductDetailContainer()
 		{
@@ -24,15 +29,27 @@ package com.sanrenxing.tb.components
 		{
 			var touch:Touch = event.getTouch(stage); 
 			var pos:Point = touch.getLocation(stage); //相对于stage的坐标
-			
 			if(touch.phase == "began") {
+				firX = pos.x;
 				firY = pos.y;
-			} else if(touch.phase == "moved") {
+			} else if(touch.phase == "moved") { 
+				if(isDispatched) return;
+				
 				if(pos.y - firY>20) {
 					this.dispatchEvent(new GestureEvent(0,1));
+					isDispatched = true;
 				} else if(firY - pos.y>20) {
 					this.dispatchEvent(new GestureEvent(0,-1));
+					isDispatched = true;
+				} else if(pos.x - firX>20) {
+					this.dispatchEvent(new GestureEvent(1,0));
+					isDispatched = true;
+				} else if(firX - pos.x>20) {
+					this.dispatchEvent(new GestureEvent(-1,0));
+					isDispatched = true;
 				}
+			} else if(touch.phase == "ended") {
+				isDispatched = false;
 			}
 			
 //			trace("touch.globalX   " + touch.globalX + "     touch.globalY   " + touch.globalY);
@@ -43,5 +60,6 @@ package com.sanrenxing.tb.components
 //			trace("touch.width   " + touch.width);
 //			trace("----------------------");
 		}
+		
 	}
 }
