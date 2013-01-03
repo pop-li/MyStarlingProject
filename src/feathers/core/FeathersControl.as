@@ -7,14 +7,15 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.core
 {
-	import feathers.controls.text.BitmapFontTextRenderer;
-	import feathers.controls.text.StageTextTextEditor;
-	import feathers.events.FeathersEventType;
-
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-
+	
+	import feathers.controls.supportClasses.LayoutViewPort;
+	import feathers.controls.text.BitmapFontTextRenderer;
+	import feathers.controls.text.StageTextTextEditor;
+	import feathers.events.FeathersEventType;
+	
 	import starling.core.RenderSupport;
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;

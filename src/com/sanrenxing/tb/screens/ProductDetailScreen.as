@@ -9,6 +9,8 @@ package com.sanrenxing.tb.screens
 	import feathers.controls.Scroller;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.events.Event;
+	
 	public class ProductDetailScreen extends Screen
 	{
 		private var _container:ProductDetailContainer;
@@ -18,7 +20,7 @@ package com.sanrenxing.tb.screens
 		private var _curScreenIndex:int;
 		private var _colorScreen:ProductColorScreen;
 		private var _heatScreen:ProductHeatScreen;
-		private var _viewScreen:ProductShowScreen;
+		private var _viewScreen:ProductPictureScreen;
 		
 		public function ProductDetailScreen()
 		{
@@ -31,6 +33,7 @@ package com.sanrenxing.tb.screens
 			
 			this._container = new ProductDetailContainer();
 			this._container.scrollerProperties.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			this._container.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			this._container.addEventListener(GestureEvent.Gesture_SWIPE,onGestureSwipeHandler);
 			this._container.scrollerProperties.snapToPages = true;
 			this.addChild(_container);
@@ -42,10 +45,12 @@ package com.sanrenxing.tb.screens
 //			_colorScreen.addEventListener(GestureEvent.Gesture_SWIPE,onGestureSwipeHandler);
 			this._container.addChild(_colorScreen);
 			_heatScreen =  new ProductHeatScreen();
-			_heatScreen.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
+			_heatScreen.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
+			_heatScreen.scrollerProperties.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 //			_heatScreen.addEventListener(GestureEvent.Gesture_SWIPE,onGestureSwipeHandler);
 			this._container.addChild(_heatScreen);
-			_viewScreen = new ProductShowScreen();
+			_viewScreen = new ProductPictureScreen();
+			_viewScreen.scrollerProperties.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_viewScreen.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 //			_viewScreen.addEventListener(GestureEvent.Gesture_SWIPE,onGestureSwipeHandler);
 			this._container.addChild(_viewScreen);

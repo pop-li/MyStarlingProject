@@ -1,9 +1,10 @@
 package com.sanrenxing.tb.screens
 {
 	import com.sanrenxing.tb.components.Product;
-	import com.sanrenxing.tb.events.GestureEvent;
 	import com.sanrenxing.tb.models.ModelLocator;
 	import com.sanrenxing.tb.vos.ProductVO;
+	
+	import flash.geom.Point;
 	
 	import feathers.controls.ScrollContainer;
 	import feathers.layout.VerticalLayout;
@@ -11,7 +12,8 @@ package com.sanrenxing.tb.screens
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;
-	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
 	
 	[Event(name="toProductHeatScreen",type="starling.events.Event")]
 	
@@ -45,6 +47,8 @@ package com.sanrenxing.tb.screens
 			_colorPane = new ScrollContainer();
 			this.addChild(_colorPane);
 			
+			this.addEventListener(TouchEvent.TOUCH,onTouchHandler);
+			
 		}
 		
 		protected function initUI():void
@@ -63,11 +67,43 @@ package com.sanrenxing.tb.screens
 			Starling.juggler.add(_colorPaneTween);
 		}
 		
-		private function onGestureHandler(event:GestureEvent):void
+		private function onTouchHandler(event:TouchEvent):void
 		{
-			if(event.offsetY == 1) {
-				this.dispatchEvent(new Event("toProductHeatScreen"));
+			var touches:Vector.<Touch> = event.getTouches(this);
+			
+			trace(this.horizontalScrollPosition + "        " + this.verticalScrollPosition);
+			if(touches.length == 2) {
+				var touchA:Touch = touches[0];
+				var touchB:Touch = touches[1];
+				
+				var currentPosA:Point  = touchA.getLocation(parent);
+				var previousPosA:Point = touchA.getPreviousLocation(parent);
+				var currentPosB:Point  = touchB.getLocation(parent);
+				var previousPosB:Point = touchB.getPreviousLocation(parent);
+				
+				var currentVector:Point  = currentPosA.subtract(currentPosB);
+				var previousVector:Point = previousPosA.subtract(previousPosB);
+				
+				var sizeDiff:Number = currentVector.length / previousVector.length;
+				trace(sizeDiff);
+				
+//				if(sizeDiff>1) {
+//					if(_pictureGap>=_model.pictureMaxGap) return;
+//					_pictureGap+=20;
+//				} else {
+//					if(_pictureGap<=0) return;
+//					_pictureGap-=20;
+//				}
+//				
+//				var length:int = pictureVector.length;
+//				for(var i:int=0;i<length;i++) {
+//					pictureVector[i].x = pictureVector[0].x + _pictureGap*i;
+//					trace("pictureVector[i].initAngle   " +  pictureVector[i].initAngle + "_pictureGap/_model.pictureMaxGap   " + (_pictureGap/_model.pictureMaxGap));
+//					
+//					pictureVector[i].angle = pictureVector[i].initAngle*(1-(_pictureGap/_model.pictureMaxGap));
+//				}
 			}
 		}
+		
 	}
 }

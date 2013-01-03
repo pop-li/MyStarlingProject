@@ -72,13 +72,20 @@ package
 						var colorList:XMLList = productXML.elements("color");
 						var colorLength:int=colorList.length();
 						for(var k:int=0;k<colorLength;k++) {
-							var colorXML:XML=colorList[j];
+							var colorXML:XML=colorList[k];
 							var productColorVO:ProductColorVO = new ProductColorVO();
 							productColorVO.colorName = colorXML.attribute("colorName");
 							productColorVO.colorIcon = colorXML.attribute("colorIcon");
 							productColorVO.img = colorXML.attribute("img");
 							
 							productVO.productColorImg.push(productColorVO);
+						}
+						
+						var pictureList:XMLList = productXML.elements("picture");
+						var pictureLength:int=pictureList.length();
+						for(var a:int=0;a<pictureLength;a++) {
+							var pictureXML:XML=pictureList[a];
+							productVO.productPicture.push(pictureXML.attribute("img"));
 						}
 						productClassVO.productListVO.push(productVO);
 					}
@@ -94,6 +101,7 @@ package
 		
 		private function initUI():void
 		{
+			this.stage
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			
@@ -109,6 +117,7 @@ package
 			_model.screenWidth = this.stage.stageWidth;
 //			_model.screenHeight = this.height;
 			_model.productWidth = 480;
+			_model.pictureMaxGap = 480;
 //			_model.productHeight = 320;
 			_model.focusDividedTouchSpeed = 0.3;
 			_model.unfocusProductSpace = _model.productWidth/3;
@@ -128,6 +137,7 @@ package
 			_model.screenWidth = this.stage.stageWidth;
 			//			_model.screenHeight = this.height;
 			_model.productWidth = 480;
+			_model.pictureMaxGap = 480;
 			//			_model.productHeight = 320;
 			_model.focusDividedTouchSpeed = 0.3;
 			_model.unfocusProductSpace = _model.productWidth/3;

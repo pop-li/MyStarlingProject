@@ -7,6 +7,11 @@
 			<color colorName="橙色" icon="" img="product3" />
 			<color colorName="棕色" icon="" img="product4" />
 			<color colorName="蓝色" icon="" img="product5" />
+			<picture img="product1" />
+			<picture img="product2" />
+			<picture img="product3" />
+			<picture img="product4" />
+			<picture img="product5" />
 		</product>
 		<product productName="test2">
 			<color colorName="红色" icon="" img="product2" />
@@ -14,6 +19,11 @@
 			<color colorName="橙色" icon="" img="product3" />
 			<color colorName="棕色" icon="" img="product4" />
 			<color colorName="蓝色" icon="" img="product5" />
+			<picture img="product1" />
+			<picture img="product2" />
+			<picture img="product3" />
+			<picture img="product4" />
+			<picture img="product5" />
 		</product>
 		<product productName="test3">
 			<color colorName="橙色" icon="" img="product3" />
@@ -21,6 +31,11 @@
 			<color colorName="红色" icon="" img="product2" />
 			<color colorName="棕色" icon="" img="product4" />
 			<color colorName="蓝色" icon="" img="product5" />
+			<picture img="product1" />
+			<picture img="product2" />
+			<picture img="product3" />
+			<picture img="product4" />
+			<picture img="product5" />
 		</product>
 	</productClass>
 	<productClass className="休闲" classImg="class1">

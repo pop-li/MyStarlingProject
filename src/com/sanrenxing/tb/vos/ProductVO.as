@@ -6,6 +6,8 @@ package com.sanrenxing.tb.vos
 		
 		public var productColorImg:Vector.<ProductColorVO>=new Vector.<ProductColorVO>();
 		
+		public var productPicture:Vector.<String> = new Vector.<String>();
+		
 		public function ProductVO()
 		{
 		}

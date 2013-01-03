@@ -53,6 +53,10 @@ package com.sanrenxing.tb.models
 		 * (商品列表试图)舞台同时显示的商品个数
 		 */
 		public var showCount4Stage:int;
+		/**
+		 * 图片之间最大间距
+		 */
+		public var pictureMaxGap:int;
 		
 		public function UIModel()
 		{

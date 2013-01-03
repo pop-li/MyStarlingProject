@@ -16,7 +16,13 @@ package com.sanrenxing.tb.components
 		private var firY:int;
 		private var firX:int;
 		
-		private var isDispatched:Boolean = false;
+		/**
+		 * 当前手势标记
+		 * 0为默认
+		 * 1为一手指move
+		 * 2为两手指zoom
+		 */
+		private var _isGestureFlag:int = 0;
 		
 		public function ProductDetailContainer()
 		{
@@ -27,30 +33,46 @@ package com.sanrenxing.tb.components
 		
 		private function onTouchHandler(event:TouchEvent):void
 		{
-			var touch:Touch = event.getTouch(stage); 
-			var pos:Point = touch.getLocation(stage); //相对于stage的坐标
-			if(touch.phase == "began") {
-				firX = pos.x;
-				firY = pos.y;
-			} else if(touch.phase == "moved") { 
-				if(isDispatched) return;
+			var touches:Vector.<Touch> = event.getTouches(stage);
+			
+			var len:int = touches.length;
+			
+			if(len == 1) {
+				if(_isGestureFlag == 2) return;
 				
-				if(pos.y - firY>20) {
-					this.dispatchEvent(new GestureEvent(0,1));
-					isDispatched = true;
-				} else if(firY - pos.y>20) {
-					this.dispatchEvent(new GestureEvent(0,-1));
-					isDispatched = true;
-				} else if(pos.x - firX>20) {
-					this.dispatchEvent(new GestureEvent(1,0));
-					isDispatched = true;
-				} else if(firX - pos.x>20) {
-					this.dispatchEvent(new GestureEvent(-1,0));
-					isDispatched = true;
+				var touch:Touch = touches[0];
+				
+				var pos:Point = touch.getLocation(this);
+				if(touch.phase == "began") {
+					firX = pos.x;
+					firY = pos.y;
+				} else if(touch.phase == "moved") { 
+					if(_isGestureFlag == 1) return;
+					
+					if(pos.y - firY>20) {
+						this.dispatchEvent(new GestureEvent(0,1));
+						_isGestureFlag = 1;
+					} else if(firY - pos.y>20) {
+						this.dispatchEvent(new GestureEvent(0,-1));
+						_isGestureFlag = 1;
+					} else if(pos.x - firX>20) {
+						this.dispatchEvent(new GestureEvent(1,0));
+						_isGestureFlag = 1;
+					} else if(firX - pos.x>20) {
+						this.dispatchEvent(new GestureEvent(-1,0));
+						_isGestureFlag = 1;
+					}
 				}
-			} else if(touch.phase == "ended") {
-				isDispatched = false;
+			} else if(len == 2) {
+				_isGestureFlag = 2;
 			}
+			
+			for(var i:int=0;i<len;i++) {
+				if(touches[i].phase != "ended") {
+					return;
+				}
+			}
+			_isGestureFlag = 0;
 			
 //			trace("touch.globalX   " + touch.globalX + "     touch.globalY   " + touch.globalY);
 //			trace("touch.pressure   " + touch.pressure);

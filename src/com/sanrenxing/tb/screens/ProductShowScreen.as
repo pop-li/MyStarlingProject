@@ -1,26 +1,27 @@
 package com.sanrenxing.tb.screens
 {
-	import com.sanrenxing.tb.components.Product;
-	import com.sanrenxing.tb.events.GestureEvent;
+	import com.sanrenxing.tb.components.PictureBox;
 	import com.sanrenxing.tb.models.ModelLocator;
 	import com.sanrenxing.tb.vos.ProductVO;
 	
-	import feathers.controls.ScrollContainer;
-	import feathers.layout.VerticalLayout;
+	import flash.geom.Point;
 	
-	import starling.animation.Transitions;
-	import starling.animation.Tween;
-	import starling.core.Starling;
-	import starling.events.Event;
+	import feathers.controls.ScrollContainer;
+	
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
 	
 	public class ProductShowScreen extends ScrollContainer
 	{
 		private var data:ProductVO;
 		
-		private var _colorPane:ScrollContainer;
-		private var _product:Product;
+		private var pictureVector:Vector.<PictureBox> = new Vector.<PictureBox>;
+		
+		private var _container:ScrollContainer;
 		
 		private var _model:ModelLocator=ModelLocator.getInstance();
+		
+		private var _pictureGap:int;
 		
 		public function ProductShowScreen()
 		{
@@ -35,36 +36,65 @@ package com.sanrenxing.tb.screens
 		
 		protected function initData():void
 		{
+//			this.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
+			
 			data = _model.currentProduct;
 			
-			_product = new Product(data);
-			this.addChild(_product);
-			
-			_colorPane = new ScrollContainer();
-			this.addChild(_colorPane);
-			
+			this.addEventListener(TouchEvent.TOUCH,onTouchHandler);
 		}
 		
 		protected function initUI():void
 		{
-			_product.x = this.width/2;
-			_product.y = this.height/2;
+			var picturesLength:int = data.productPicture.length;
+			for(var i:int=0;i<picturesLength;i++) {
+				var picture:PictureBox = new PictureBox(data.productPicture[i]);
+				picture.initAngle = (Math.ceil(Math.random()*10))*4-20;
+				picture.angle = picture.initAngle;
+				picture.x = this.actualWidth/2;
+				picture.y = this.actualHeight/2;
+				pictureVector.push(picture);
+				if(i==0) {
+				this.addChild(picture);
+				}
+			}
 			
-			var _colorPaneLayout:VerticalLayout = new VerticalLayout();
-			_colorPaneLayout.gap = 5;
-			_colorPaneLayout.paddingTop = 5;
-			_colorPane.layout = _colorPaneLayout;
-			_colorPane.y = -_colorPane.height;
-			
-			var _colorPaneTween:Tween= new Tween(_colorPane,0.7,Transitions.EASE_OUT_BACK);
-			_colorPaneTween.animate("y",0);
-			Starling.juggler.add(_colorPaneTween);
 		}
 		
-		private function onGestureHandler(event:GestureEvent):void
+		private function onTouchHandler(event:TouchEvent):void
 		{
-			if(event.offsetY == -1) {
-				this.dispatchEvent(new Event("toProductHeatScreen"));
+			var touches:Vector.<Touch> = event.getTouches(this);
+			
+			trace(this.horizontalScrollPosition + "        " + this.verticalScrollPosition);
+			if(touches.length == 2) {
+				var touchA:Touch = touches[0];
+				var touchB:Touch = touches[1];
+				
+				var currentPosA:Point  = touchA.getLocation(parent);
+				var previousPosA:Point = touchA.getPreviousLocation(parent);
+				var currentPosB:Point  = touchB.getLocation(parent);
+				var previousPosB:Point = touchB.getPreviousLocation(parent);
+				
+				var currentVector:Point  = currentPosA.subtract(currentPosB);
+				var previousVector:Point = previousPosA.subtract(previousPosB);
+				
+				var sizeDiff:Number = currentVector.length / previousVector.length;
+				trace(sizeDiff);
+				
+//				if(sizeDiff>1) {
+//					if(_pictureGap>=_model.pictureMaxGap) return;
+//					_pictureGap+=20;
+//				} else {
+//					if(_pictureGap<=0) return;
+//					_pictureGap-=20;
+//				}
+//				
+//				var length:int = pictureVector.length;
+//				for(var i:int=0;i<length;i++) {
+//					pictureVector[i].x = pictureVector[0].x + _pictureGap*i;
+//					trace("pictureVector[i].initAngle   " +  pictureVector[i].initAngle + "_pictureGap/_model.pictureMaxGap   " + (_pictureGap/_model.pictureMaxGap));
+//					
+//					pictureVector[i].angle = pictureVector[i].initAngle*(1-(_pictureGap/_model.pictureMaxGap));
+//				}
 			}
 		}
 	}

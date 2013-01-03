@@ -8,10 +8,12 @@ package
 	
 	import feathers.controls.ScreenNavigator;
 	import feathers.controls.ScreenNavigatorItem;
+	import feathers.controls.Scroller;
 	import feathers.motion.transitions.ScreenFadeTransitionManager;
 	
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.TouchEvent;
 	
 	public class Main extends Sprite
 	{
@@ -37,7 +39,6 @@ package
 			
 			this._navigator = new ScreenNavigator();
 			this.addChild(this._navigator);
-			
 			
 			this._navigator.addScreen(_model.PRODUCT_CLASS_SCREEN, new ScreenNavigatorItem(
 				ProductClassScreen,
