@@ -29,7 +29,11 @@ package com.sanrenxing.tb.components
 		{
 			if(value == _angle) return;
 			_angle = value;
-			this.rotation = value*Math.PI/180;
+			_image.rotation = value*Math.PI/180;
+			
+			_image.x += -(_image.bounds.left + (_image.width/2));
+			_image.y += -(_image.bounds.top + (_image.height/2));
+			setSize(_image.width,_image.height);
 		}
 		
 		public function get angle():int
