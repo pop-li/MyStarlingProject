@@ -7,6 +7,7 @@ package com.sanrenxing.tb.screens
 	import flash.geom.Point;
 	
 	import feathers.controls.ScrollContainer;
+	import feathers.controls.Scroller;
 	import feathers.events.FeathersEventType;
 	
 	import starling.animation.Transitions;
@@ -68,6 +69,7 @@ package com.sanrenxing.tb.screens
 			var length:int = pictureVector.length;
 			trace(touches.length);
 			if(touches.length == 2) {
+				this.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 				
 				var touchA:Touch = touches[0];
 				var touchB:Touch = touches[1];
@@ -105,6 +107,7 @@ package com.sanrenxing.tb.screens
 				}
 				
 				if(touches[0].phase == "ended" || touches[1].phase == "ended") {
+					this.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 					if(_pictureGap>_model.productWidth/2) {
 						for(var a:int=1;a<length;a++) {
 							var openTween:Tween = new Tween(pictureVector[a],1,Transitions.EASE_OUT);

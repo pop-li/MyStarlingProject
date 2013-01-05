@@ -4,16 +4,24 @@ package com.sanrenxing.tb.screens
 	import com.sanrenxing.tb.events.GestureEvent;
 	import com.sanrenxing.tb.models.ModelLocator;
 	
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.remoting.mxml.RemoteObject;
+	import mx.utils.RpcClassAliasInitializer;
+	
+	import feathers.controls.Button;
 	import feathers.controls.Screen;
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
 	import feathers.layout.VerticalLayout;
 	
+	import starling.display.Sprite;
 	import starling.events.Event;
 	
 	public class ProductDetailScreen extends Screen
 	{
 		private var _container:ProductDetailContainer;
+		private var _helpPane:Sprite;
 		private var _model:ModelLocator=ModelLocator.getInstance();
 		
 		private var _screenVector:Vector.<ScrollContainer>=new Vector.<ScrollContainer>();
@@ -37,6 +45,17 @@ package com.sanrenxing.tb.screens
 			this._container.addEventListener(GestureEvent.Gesture_SWIPE,onGestureSwipeHandler);
 			this._container.scrollerProperties.snapToPages = true;
 			this.addChild(_container);
+			
+			this._helpPane = new Sprite();
+			this._helpPane.width = 200;
+			this._helpPane.height = 600;
+			
+			var lisBtn:Button = new Button();
+			lisBtn.y = 400;
+			lisBtn.label = "关注";
+			lisBtn.addEventListener(Event.TRIGGERED,attentionProduct);
+			this._helpPane.addChild(lisBtn);
+			this.addChild(_helpPane);
 			
 			this._container.layout = layout;
 			
@@ -90,6 +109,23 @@ package com.sanrenxing.tb.screens
 				}
 				_container.scrollToPageIndex(0,--_curScreenIndex,1);
 			}
+		}
+		
+		private var ro:RemoteObject = new RemoteObject();
+		private function attentionProduct(event:Event):void
+		{
+			RpcClassAliasInitializer.registerClassAliases();
+			ro.destination = "testa";
+			ro.endpoint="http://localhost:8080/MobileBlazeDSDemo/messagebroker/amf";
+			ro.addEventListener(ResultEvent.RESULT,function (event:ResultEvent):void
+			{
+				trace("result");
+			});
+			ro.addEventListener(FaultEvent.FAULT,function (event:FaultEvent):void
+			{
+				trace("fault");
+			});
+			ro.pushNotification();
 		}
 		
 	}
