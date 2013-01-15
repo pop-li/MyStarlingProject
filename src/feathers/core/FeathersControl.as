@@ -1,21 +1,22 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.core
 {
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	
-	import feathers.controls.supportClasses.LayoutViewPort;
 	import feathers.controls.text.BitmapFontTextRenderer;
 	import feathers.controls.text.StageTextTextEditor;
 	import feathers.events.FeathersEventType;
-	
+	import feathers.layout.ILayoutData;
+	import feathers.layout.ILayoutDisplayObject;
+
+	import flash.geom.Matrix;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+
 	import starling.core.RenderSupport;
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
@@ -42,7 +43,7 @@ package feathers.core
 	 * basic template functions like <code>initialize()</code> and
 	 * <code>draw()</code>.
 	 */
-	public class FeathersControl extends Sprite implements IFeathersControl
+	public class FeathersControl extends Sprite implements IFeathersControl, ILayoutDisplayObject
 	{
 		/**
 		 * @private
@@ -620,6 +621,40 @@ package feathers.core
 
 		/**
 		 * @private
+		 */
+		protected var _layoutData:ILayoutData;
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get layoutData():ILayoutData
+		{
+			return this._layoutData;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set layoutData(value:ILayoutData):void
+		{
+			if(this._layoutData == value)
+			{
+				return;
+			}
+			if(this._layoutData)
+			{
+				this._layoutData.removeEventListener(Event.CHANGE, layoutData_changeHandler);
+			}
+			this._layoutData = value;
+			if(this._layoutData)
+			{
+				this._layoutData.addEventListener(Event.CHANGE, layoutData_changeHandler);
+			}
+			this.dispatchEventWith(FeathersEventType.LAYOUT_DATA_CHANGE);
+		}
+
+		/**
+		 * @private
 		 * Flag to indicate that the control is currently validating.
 		 */
 		protected var _isValidating:Boolean = false;
@@ -989,6 +1024,14 @@ package feathers.core
 				this._invalidateCount = 0;
 				VALIDATION_QUEUE.addControl(this, false);
 			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function layoutData_changeHandler(event:Event):void
+		{
+			this.dispatchEventWith(FeathersEventType.LAYOUT_DATA_CHANGE);
 		}
 	}
 }

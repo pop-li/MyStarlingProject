@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -12,6 +12,11 @@ package feathers.controls
 	import feathers.core.PropertyProxy;
 	import feathers.events.FeathersEventType;
 
+	import flash.text.AntiAliasType;
+
+	import flash.text.GridFitType;
+
+	import flash.text.StyleSheet;
 	import flash.text.TextFormat;
 
 	import starling.events.Event;
@@ -116,10 +121,40 @@ package feathers.controls
 		/**
 		 * @private
 		 */
+		protected var _isHTML:Boolean = false;
+
+		/**
+		 * Determines if the TextField should display the text as HTML or not.
+		 *
+		 * @see flash.text.TextField#htmlText
+		 */
+		public function get isHTML():Boolean
+		{
+			return this._isHTML;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set isHTML(value:Boolean):void
+		{
+			if(this._isHTML == value)
+			{
+				return;
+			}
+			this._isHTML = value;
+			this.invalidate(INVALIDATION_FLAG_DATA);
+		}
+
+		/**
+		 * @private
+		 */
 		protected var _textFormat:TextFormat;
 
 		/**
 		 * The font and styles used to draw the text.
+		 *
+		 * @see flash.text.TextFormat
 		 */
 		public function get textFormat():TextFormat
 		{
@@ -136,6 +171,34 @@ package feathers.controls
 				return;
 			}
 			this._textFormat = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _styleSheet:StyleSheet;
+
+		/**
+		 * The <code>StyleSheet</code> object to pass to the TextField.
+		 *
+		 * @see flash.text.StyleSheet
+		 */
+		public function get styleSheet():StyleSheet
+		{
+			return this._styleSheet;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set styleSheet(value:StyleSheet):void
+		{
+			if(this._styleSheet == value)
+			{
+				return;
+			}
+			this._styleSheet = value;
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
 
@@ -168,26 +231,280 @@ package feathers.controls
 		/**
 		 * @private
 		 */
-		protected var _isHTML:Boolean = false;
+		private var _antiAliasType:String = AntiAliasType.ADVANCED;
 
 		/**
-		 * Determines if the TextField should display the text as HTML or not.
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#antiAliasType
 		 */
-		public function get isHTML():Boolean
+		public function get antiAliasType():String
 		{
-			return this._isHTML;
+			return this._antiAliasType;
 		}
 
 		/**
 		 * @private
 		 */
-		public function set isHTML(value:Boolean):void
+		public function set antiAliasType(value:String):void
 		{
-			if(this._isHTML == value)
+			if(this._antiAliasType == value)
 			{
 				return;
 			}
-			this._isHTML = value;
+			this._antiAliasType = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _background:Boolean = false;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#background
+		 */
+		public function get background():Boolean
+		{
+			return this._background;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set background(value:Boolean):void
+		{
+			if(this._background == value)
+			{
+				return;
+			}
+			this._background = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _backgroundColor:uint = 0xffffff;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#backgroundColor
+		 */
+		public function get backgroundColor():uint
+		{
+			return this._backgroundColor;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set backgroundColor(value:uint):void
+		{
+			if(this._backgroundColor == value)
+			{
+				return;
+			}
+			this._backgroundColor = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _border:Boolean = false;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#border
+		 */
+		public function get border():Boolean
+		{
+			return this._border;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set border(value:Boolean):void
+		{
+			if(this._border == value)
+			{
+				return;
+			}
+			this._border = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _borderColor:uint = 0x000000;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#borderColor
+		 */
+		public function get borderColor():uint
+		{
+			return this._borderColor;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set borderColor(value:uint):void
+		{
+			if(this._borderColor == value)
+			{
+				return;
+			}
+			this._borderColor = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _condenseWhite:Boolean = false;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#condenseWhite
+		 */
+		public function get condenseWhite():Boolean
+		{
+			return this._condenseWhite;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set condenseWhite(value:Boolean):void
+		{
+			if(this._condenseWhite == value)
+			{
+				return;
+			}
+			this._condenseWhite = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _displayAsPassword:Boolean = false;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#displayAsPassword
+		 */
+		public function get displayAsPassword():Boolean
+		{
+			return this._displayAsPassword;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set displayAsPassword(value:Boolean):void
+		{
+			if(this._displayAsPassword == value)
+			{
+				return;
+			}
+			this._displayAsPassword = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _gridFitType:String = GridFitType.PIXEL;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#gridFitType
+		 */
+		public function get gridFitType():String
+		{
+			return this._gridFitType;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set gridFitType(value:String):void
+		{
+			if(this._gridFitType == value)
+			{
+				return;
+			}
+			this._gridFitType = value;
+			this.invalidate(INVALIDATION_FLAG_STYLES);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _sharpness:Number = 0;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#sharpness
+		 */
+		public function get sharpness():Number
+		{
+			return this._sharpness;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set sharpness(value:Number):void
+		{
+			if(this._sharpness == value)
+			{
+				return;
+			}
+			this._sharpness = value;
+			this.invalidate(INVALIDATION_FLAG_DATA);
+		}
+
+		/**
+		 * @private
+		 */
+		private var _thickness:Number = 0;
+
+		/**
+		 * Same as the TextField property with the same name.
+		 *
+		 * @see flash.text.TextField#thickness
+		 */
+		public function get thickness():Number
+		{
+			return this._thickness;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set thickness(value:Number):void
+		{
+			if(this._thickness == value)
+			{
+				return;
+			}
+			this._thickness = value;
 			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 
@@ -553,7 +870,18 @@ package feathers.controls
 
 			if(stylesInvalid)
 			{
+				this.viewPort.antiAliasType = this._antiAliasType;
+				this.viewPort.background = this._background;
+				this.viewPort.backgroundColor = this._backgroundColor;
+				this.viewPort.border = this._border;
+				this.viewPort.borderColor = this._borderColor;
+				this.viewPort.condenseWhite = this._condenseWhite;
+				this.viewPort.displayAsPassword = this._displayAsPassword;
+				this.viewPort.gridFitType = this._gridFitType;
+				this.viewPort.sharpness = this._sharpness;
+				this.viewPort.thickness = this._thickness;
 				this.viewPort.textFormat = this._textFormat;
+				this.viewPort.styleSheet = this._styleSheet;
 				this.viewPort.embedFonts = this._embedFonts;
 				this.viewPort.paddingTop = this._paddingTop;
 				this.viewPort.paddingRight = this._paddingRight;

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2012 Josh Tynjala
+Copyright 2012-2013 Joshua Tynjala
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -126,26 +126,13 @@ package feathers.controls.renderers
 			{
 				return;
 			}
-			if(this._owner)
-			{
-				GroupedList(this._owner).removeEventListener(Event.SCROLL, owner_scrollHandler);
-			}
 			this._owner = value;
 			if(this._owner)
 			{
 				const list:GroupedList = GroupedList(this._owner);
 				this.isToggle = list.isSelectable;
-				list.addEventListener(Event.SCROLL, owner_scrollHandler);
 			}
 			this.invalidate(INVALIDATION_FLAG_DATA);
-		}
-		
-		/**
-		 * @private
-		 */
-		protected function owner_scrollHandler(event:Event):void
-		{
-			this.handleOwnerScroll();
 		}
 	}
 }

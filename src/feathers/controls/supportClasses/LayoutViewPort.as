@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -157,12 +157,12 @@ package feathers.controls.supportClasses
 
 		public function get horizontalScrollStep():Number
 		{
-			return this._visibleWidth / 10;
+			return Math.min(this.actualWidth, this.actualHeight) / 10;
 		}
 
 		public function get verticalScrollStep():Number
 		{
-			return this._visibleHeight / 10;
+			return Math.min(this.actualWidth, this.actualHeight) / 10;
 		}
 
 		private var _horizontalScrollPosition:Number = 0;

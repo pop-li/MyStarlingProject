@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2012 Josh Tynjala
+Copyright 2012-2013 Joshua Tynjala
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -88,6 +88,12 @@ package feathers.motion.transitions
 		 * The easing function to use.
 		 */
 		public var ease:Object = Transitions.EASE_OUT;
+
+		/**
+		 * Determines if the next transition should be skipped. After the
+		 * transition, this value returns to <code>false</code>.
+		 */
+		public var skipNextTransition:Boolean = false;
 		
 		/**
 		 * The function passed to the <code>transition</code> property of the
@@ -99,12 +105,28 @@ package feathers.motion.transitions
 			{
 				throw new ArgumentError("Cannot transition if both old screen and new screen are null.");
 			}
-			
+
 			if(this._activeTransition)
 			{
 				this._savedOtherTarget = null;
 				this._activeTransition.advanceTime(this._activeTransition.totalTime);
 				this._activeTransition = null;
+			}
+
+			if(this.skipNextTransition)
+			{
+				this.skipNextTransition = false;
+				this._savedCompleteHandler = null;
+				if(newScreen)
+				{
+					newScreen.x = 0;
+					newScreen.alpha = 1;
+				}
+				if(onComplete != null)
+				{
+					onComplete();
+				}
+				return;
 			}
 			
 			this._savedCompleteHandler = onComplete;

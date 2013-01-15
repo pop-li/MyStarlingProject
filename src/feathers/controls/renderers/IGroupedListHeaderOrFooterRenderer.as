@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -8,11 +8,12 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls.renderers
 {
 	import feathers.controls.GroupedList;
+	import feathers.core.IFeathersControl;
 
 	/**
 	 * Interface to implement a renderer for a grouped list header or footer.
 	 */
-	public interface IGroupedListHeaderOrFooterRenderer
+	public interface IGroupedListHeaderOrFooterRenderer extends IFeathersControl
 	{
 		/**
 		 * Data for a header or footer from the grouped list's data provider.

@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -439,6 +439,12 @@ package feathers.controls.renderers
 			}
 			super.currentState = value;
 		}
+
+		/**
+		 * If enabled, calls event.stopPropagation() when TouchEvents are
+		 * dispatched by the accessory.
+		 */
+		public var stopAccessoryTouchEventPropagation:Boolean = true;
 
 		/**
 		 * @private
@@ -1954,23 +1960,6 @@ package feathers.controls.renderers
 		/**
 		 * @private
 		 */
-		protected function handleOwnerScroll():void
-		{
-			this._touchPointID = -1;
-			if(this._stateDelayTimer && this._stateDelayTimer.running)
-			{
-				this._stateDelayTimer.stop();
-			}
-			this._delayedCurrentState = null;
-			if(this._currentState != Button.STATE_UP)
-			{
-				super.currentState = Button.STATE_UP;
-			}
-		}
-
-		/**
-		 * @private
-		 */
 		protected function accessoryLabelProperties_onChange(proxy:PropertyProxy, name:String):void
 		{
 			this.invalidate(INVALIDATION_FLAG_STYLES);
@@ -1990,7 +1979,8 @@ package feathers.controls.renderers
 		 */
 		protected function accessory_touchHandler(event:TouchEvent):void
 		{
-			if(this.accessory == this.accessoryLabel ||
+			if(!this.stopAccessoryTouchEventPropagation ||
+				this.accessory == this.accessoryLabel ||
 				this.accessory == this.accessoryImage)
 			{
 				//do nothing

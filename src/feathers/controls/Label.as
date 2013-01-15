@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -64,6 +64,19 @@ package feathers.controls
 			}
 			this._text = value;
 			this.invalidate(INVALIDATION_FLAG_DATA);
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _baseline:Number = 0;
+
+		/**
+		 * The baseline value of the text.
+		 */
+		public function get baseline():Number
+		{
+			return this._baseline;
 		}
 
 		/**
@@ -289,6 +302,8 @@ package feathers.controls
 		protected function layout():void
 		{
 			this.textRenderer.width = this.actualWidth;
+			this.textRenderer.validate();
+			this._baseline = this.textRenderer.baseline;
 		}
 
 		/**

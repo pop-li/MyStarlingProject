@@ -1,12 +1,14 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.layout
 {
+	import feathers.core.IFeathersEventDispatcher;
+
 	import flash.geom.Point;
 
 	import starling.display.DisplayObject;
@@ -22,7 +24,7 @@ package feathers.layout
 	/**
 	 * Interface providing layout capabilities for containers.
 	 */
-	public interface ILayout
+	public interface ILayout extends IFeathersEventDispatcher
 	{
 		/**
 		 * Positions (and possibly resizes) the supplied items within the

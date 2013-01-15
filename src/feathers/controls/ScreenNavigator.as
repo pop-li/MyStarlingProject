@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -381,6 +381,44 @@ package feathers.controls
 				throw new IllegalOperationError("Screen '" + id + "' cannot be removed because it has not been added.");
 			}
 			delete this._screens[id];
+		}
+
+		/**
+		 * Determines if the specified screen identifier has been added.
+		 */
+		public function hasScreen(id:String):Boolean
+		{
+			return this._screens.hasOwnProperty(id);
+		}
+
+		/**
+		 * Returns the <code>ScreenNavigatorItem</code> instance with the
+		 * specified identifier.
+		 */
+		public function getScreen(id:String):ScreenNavigatorItem
+		{
+			if(this._screens.hasOwnProperty(id))
+			{
+				return ScreenNavigatorItem(this._screens[id]);
+			}
+			return null;
+		}
+
+		/**
+		 * Returns a list of the screen identifiers that have been added.
+		 */
+		public function getScreenIDs(result:Vector.<String> = null):Vector.<String>
+		{
+			if(!result)
+			{
+				result = new <String>[];
+			}
+
+			for(var id:String in this._screens)
+			{
+				result.push(id);
+			}
+			return result;
 		}
 
 		/**

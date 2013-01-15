@@ -50,12 +50,12 @@ package com.sanrenxing.tb.screens
 			this._helpPane.width = 200;
 			this._helpPane.height = 600;
 			
-			var lisBtn:Button = new Button();
-			lisBtn.y = 400;
-			lisBtn.label = "关注";
-			lisBtn.addEventListener(Event.TRIGGERED,attentionProduct);
-			this._helpPane.addChild(lisBtn);
-			this.addChild(_helpPane);
+//			var lisBtn:Button = new Button();
+//			lisBtn.y = 400;
+//			lisBtn.label = "关注";
+//			lisBtn.addEventListener(Event.TRIGGERED,attentionProduct);
+//			this._helpPane.addChild(lisBtn);
+//			this.addChild(_helpPane);
 			
 			this._container.layout = layout;
 			

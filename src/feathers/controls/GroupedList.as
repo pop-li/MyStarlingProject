@@ -1,6 +1,6 @@
 /*
 Feathers
-Copyright (c) 2012 Josh Tynjala. All Rights Reserved.
+Copyright 2012-2013 Joshua Tynjala. All Rights Reserved.
 
 This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
@@ -546,6 +546,16 @@ package feathers.controls
 			}
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}
+
+		/**
+		 * @private
+		 */
+		protected var _originalBackgroundWidth:Number = NaN;
+
+		/**
+		 * @private
+		 */
+		protected var _originalBackgroundHeight:Number = NaN;
 
 		/**
 		 * @private
@@ -2090,10 +2100,18 @@ package feathers.controls
 			if(needsWidth)
 			{
 				newWidth = this.scroller.width + this._paddingLeft + this._paddingRight;
+				if(!isNaN(this._originalBackgroundWidth))
+				{
+					newWidth = Math.max(newWidth, this._originalBackgroundWidth);
+				}
 			}
 			if(needsHeight)
 			{
 				newHeight = this.scroller.height + this._paddingTop + this._paddingBottom;
+				if(!isNaN(this._originalBackgroundHeight))
+				{
+					newHeight = Math.max(newHeight, this._originalBackgroundHeight);
+				}
 			}
 
 			return this.setSizeInternal(newWidth, newHeight, false);
@@ -2135,6 +2153,15 @@ package feathers.controls
 			if(this.currentBackgroundSkin)
 			{
 				this.currentBackgroundSkin.visible = true;
+
+				if(isNaN(this._originalBackgroundWidth))
+				{
+					this._originalBackgroundWidth = this.currentBackgroundSkin.width;
+				}
+				if(isNaN(this._originalBackgroundHeight))
+				{
+					this._originalBackgroundHeight = this.currentBackgroundSkin.height;
+				}
 			}
 		}
 
