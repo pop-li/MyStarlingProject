@@ -1,6 +1,7 @@
 package
 {
 	import com.sanrenxing.tb.models.ModelLocator;
+	import com.sanrenxing.tb.services.AppService;
 	import com.sanrenxing.tb.vos.ProductClassVO;
 	import com.sanrenxing.tb.vos.ProductColorVO;
 	import com.sanrenxing.tb.vos.ProductVO;
@@ -11,13 +12,17 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
+	import flash.events.RemoteNotificationEvent;
 	import flash.geom.Rectangle;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.notifications.NotificationStyle;
+	import flash.notifications.RemoteNotifierSubscribeOptions;
 	
 	import mx.logging.Log;
 	import mx.logging.LogEventLevel;
 	import mx.logging.targets.TraceTarget;
+	import mx.utils.RpcClassAliasInitializer;
 	
 	import starling.core.Starling;
 
@@ -50,6 +55,16 @@ package
 		
 		private function initData():void
 		{
+			var subscribeOptions:RemoteNotifierSubscribeOptions = new RemoteNotifierSubscribeOptions();
+			var preferredStyles:Vector.<String> = new Vector.<String>();
+			preferredStyles.push(NotificationStyle.ALERT ,NotificationStyle.BADGE,NotificationStyle.SOUND );
+			subscribeOptions.notificationStyles = preferredStyles;
+			_model.remoteNotifier.addEventListener(RemoteNotificationEvent.TOKEN,remoteNotificationHandler);
+			_model.remoteNotifier.addEventListener(RemoteNotificationEvent.NOTIFICATION,remoteNotificationHandler);
+			_model.remoteNotifier.subscribe(subscribeOptions);
+			
+			RpcClassAliasInitializer.registerClassAliases();
+			
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE,function (e:Event):void
 			{
@@ -101,7 +116,6 @@ package
 		
 		private function initUI():void
 		{
-			this.stage
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			
@@ -165,6 +179,19 @@ package
 			
 			if (Starling.context.driverInfo.toLowerCase().indexOf("software") != -1)
 				Starling.current.nativeStage.frameRate = 30;
+		}
+		
+		private function remoteNotificationHandler(e:RemoteNotificationEvent):void
+		{
+			if(e.type == RemoteNotificationEvent.TOKEN) {
+				_model.TOKEN_ID = e.tokenId;
+				if(_model.TOKEN_ID) {
+					(new AppService()).addRegistUser();
+				}
+			} else {
+				
+			}
+			
 		}
 	}
 }

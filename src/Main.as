@@ -8,12 +8,10 @@ package
 	
 	import feathers.controls.ScreenNavigator;
 	import feathers.controls.ScreenNavigatorItem;
-	import feathers.controls.Scroller;
 	import feathers.motion.transitions.ScreenFadeTransitionManager;
 	
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.TouchEvent;
 	
 	public class Main extends Sprite
 	{
