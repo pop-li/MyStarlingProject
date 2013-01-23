@@ -20,5 +20,35 @@ package com.sanrenxing.tb.utils
 		
 		[Embed(source = "assets/images/shoes/5.png")]
 		public static const product5:Class;
+		
+		[Embed(source = "assets/images/theme1/attention_btn_down.png")]
+		public static const ATTENTION_BTN_DOWN:Class;
+		
+		[Embed(source = "assets/images/theme1/attention_btn_up.png")]
+		public static const ATTENTION_BTN_UP:Class;
+		
+		[Embed(source = "assets/images/theme1/back_btn_down.png")]
+		public static const BACK_BTN_DOWN:Class;
+		
+		[Embed(source = "assets/images/theme1/back_btn_up.png")]
+		public static const BACK_BTN_UP:Class;
+		
+		[Embed(source = "assets/images/theme1/close_btn_down.png")]
+		public static const CLOSE_BTN_DOWN:Class;
+		
+		[Embed(source = "assets/images/theme1/close_btn_up.png")]
+		public static const CLOSE_BTN_UP:Class;
+		
+		[Embed(source = "assets/images/theme1/control_pane_bg.png")]
+		public static const CONTROL_PANE_BG:Class;
+		
+		[Embed(source = "assets/images/theme1/heat.png")]
+		public static const HEAT:Class;
+		
+		[Embed(source = "assets/images/theme1/logo.png")]
+		public static const LOGO:Class;
+		
+		[Embed(source = "assets/images/theme1/main_bg.png")]
+		public static const MAIN_BG:Class;
     }
 }

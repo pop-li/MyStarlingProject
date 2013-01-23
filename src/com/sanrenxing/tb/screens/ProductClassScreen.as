@@ -1,6 +1,7 @@
 package com.sanrenxing.tb.screens
 {
 	import com.sanrenxing.tb.components.ProductClassBox;
+	import com.sanrenxing.tb.models.CustomComponentTheme;
 	import com.sanrenxing.tb.models.ModelLocator;
 	import com.sanrenxing.tb.vos.ProductClassVO;
 	
@@ -51,6 +52,7 @@ package com.sanrenxing.tb.screens
 			this._container.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_ON;
 //			this._container.scrollerProperties.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			this._container.scrollerProperties.snapScrollPositionsToPixels = true;
+//			this._container.nameList.add(CustomComponentTheme.MAIN_BACKGROUND);
 			this.addChild(this._container);
 			
 			var productClassBox:ProductClassBox;

@@ -1,5 +1,6 @@
 package
 {
+	import com.sanrenxing.tb.models.CustomComponentTheme;
 	import com.sanrenxing.tb.models.ModelLocator;
 	import com.sanrenxing.tb.screens.ProductClassScreen;
 	import com.sanrenxing.tb.screens.ProductDetailScreen;
@@ -33,7 +34,7 @@ package
 		
 		private function addedToStageHandler():void
 		{
-			this._theme = new MetalWorksMobileTheme(this.stage);
+			_model.currentTheme = new CustomComponentTheme(this.stage);
 			
 			this._navigator = new ScreenNavigator();
 			this.addChild(this._navigator);

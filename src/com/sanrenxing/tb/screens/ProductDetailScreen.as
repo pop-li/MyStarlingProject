@@ -2,26 +2,26 @@ package com.sanrenxing.tb.screens
 {
 	import com.sanrenxing.tb.components.ProductDetailContainer;
 	import com.sanrenxing.tb.events.GestureEvent;
+	import com.sanrenxing.tb.models.CustomComponentTheme;
 	import com.sanrenxing.tb.models.ModelLocator;
 	
-	import mx.rpc.events.FaultEvent;
-	import mx.rpc.events.ResultEvent;
 	import mx.rpc.remoting.mxml.RemoteObject;
-	import mx.utils.RpcClassAliasInitializer;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Screen;
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
 	import feathers.layout.VerticalLayout;
+	import feathers.skins.Scale9ImageStateValueSelector;
 	
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
 	public class ProductDetailScreen extends Screen
 	{
 		private var _container:ProductDetailContainer;
-		private var _helpPane:Sprite;
+		private var _controlPane:ScrollContainer;
 		private var _model:ModelLocator=ModelLocator.getInstance();
 		
 		private var _screenVector:Vector.<ScrollContainer>=new Vector.<ScrollContainer>();
@@ -46,16 +46,22 @@ package com.sanrenxing.tb.screens
 			this._container.scrollerProperties.snapToPages = true;
 			this.addChild(_container);
 			
-			this._helpPane = new Sprite();
-			this._helpPane.width = 200;
-			this._helpPane.height = 600;
+			this._controlPane = new ScrollContainer();
+			this.addChild(_controlPane);
 			
-//			var lisBtn:Button = new Button();
-//			lisBtn.y = 400;
-//			lisBtn.label = "关注";
-//			lisBtn.addEventListener(Event.TRIGGERED,attentionProduct);
-//			this._helpPane.addChild(lisBtn);
-//			this.addChild(_helpPane);
+			var _infoPane :ScrollContainer = new ScrollContainer();
+			_infoPane.nameList.add(CustomComponentTheme.CONTROL_PANE_BACKGROUND);
+			_infoPane.layout = layout;
+			
+			var attentionBtn:Button = new Button();
+			attentionBtn.x = 250;
+			attentionBtn.y = 150;
+			attentionBtn.nameList.add(CustomComponentTheme.ATTENTION_BTN);
+			attentionBtn.addEventListener(Event.TRIGGERED,attentionProduct);
+			this.addChild(attentionBtn);
+			
+			this._controlPane.addChild(_infoPane);
+			this._controlPane.addChild(attentionBtn);
 			
 			this._container.layout = layout;
 			
@@ -111,21 +117,8 @@ package com.sanrenxing.tb.screens
 			}
 		}
 		
-		private var ro:RemoteObject = new RemoteObject();
 		private function attentionProduct(event:Event):void
 		{
-			RpcClassAliasInitializer.registerClassAliases();
-			ro.destination = "testa";
-			ro.endpoint="http://localhost:8080/MobileBlazeDSDemo/messagebroker/amf";
-			ro.addEventListener(ResultEvent.RESULT,function (event:ResultEvent):void
-			{
-				trace("result");
-			});
-			ro.addEventListener(FaultEvent.FAULT,function (event:FaultEvent):void
-			{
-				trace("fault");
-			});
-			ro.pushNotification();
 		}
 		
 	}

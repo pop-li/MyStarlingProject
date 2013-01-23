@@ -2,6 +2,8 @@ package com.sanrenxing.tb.models
 {
 	public class UIModel extends DataModel
 	{
+		public var currentTheme:MetalWorksMobileTheme;
+		
 		public const PRODUCT_CLASS_SCREEN:String = "productClassScreen";
 		public const RPODUCT_LIST_SCREEN:String = "productListScreen";
 		public const PRODUCT_DETAIL_SCREEN:String = "productDetailScreen";
