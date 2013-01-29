@@ -1,9 +1,13 @@
 package com.sanrenxing.tb.screens
 {
+	import com.sanrenxing.tb.components.ColorButton;
 	import com.sanrenxing.tb.components.ProductDetailContainer;
 	import com.sanrenxing.tb.events.GestureEvent;
 	import com.sanrenxing.tb.models.CustomComponentTheme;
 	import com.sanrenxing.tb.models.ModelLocator;
+	import com.sanrenxing.tb.utils.Assets;
+	
+	import flash.events.KeyboardEvent;
 	
 	import mx.rpc.remoting.mxml.RemoteObject;
 	
@@ -11,17 +15,25 @@ package com.sanrenxing.tb.screens
 	import feathers.controls.Screen;
 	import feathers.controls.ScrollContainer;
 	import feathers.controls.Scroller;
+	import feathers.layout.HorizontalLayout;
 	import feathers.layout.VerticalLayout;
 	import feathers.skins.Scale9ImageStateValueSelector;
 	
+	import flashx.textLayout.formats.VerticalAlign;
+	
+	import starling.animation.Tween;
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
 	
 	public class ProductDetailScreen extends Screen
 	{
 		private var _container:ProductDetailContainer;
 		private var _controlPane:ScrollContainer;
+		private var _colorPane:ScrollContainer;
 		private var _model:ModelLocator=ModelLocator.getInstance();
 		
 		private var _screenVector:Vector.<ScrollContainer>=new Vector.<ScrollContainer>();
@@ -69,6 +81,32 @@ package com.sanrenxing.tb.screens
 			_colorScreen.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_AUTO;
 //			_colorScreen.addEventListener(GestureEvent.Gesture_SWIPE,onGestureSwipeHandler);
 			this._container.addChild(_colorScreen);
+			
+			var _colorPaneLayout:VerticalLayout = new VerticalLayout();
+			_colorPaneLayout.horizontalAlign = VerticalLayout.HORIZONTAL_ALIGN_CENTER;
+			_colorPaneLayout.verticalAlign = VerticalLayout.VERTICAL_ALIGN_MIDDLE;
+			_colorPaneLayout.gap = 10;
+			_colorPaneLayout.paddingTop = 60;
+			_colorPaneLayout.paddingBottom = 10;
+			
+			_colorPane = new ScrollContainer();
+			_colorPane.width = 136;
+			_colorPane.height = 0;
+			_colorPane.maxHeight = 300;
+			_colorPane.layout = _colorPaneLayout;
+			_colorPane.nameList.add(CustomComponentTheme.COLOR_PANE_BACKGROUND);
+			_colorPane.addEventListener(TouchEvent.TOUCH,onTouchColorPaneHandler);
+			_colorScreen.addChild(_colorPane);
+			
+			var cl:int = _model.currentProduct.productColorImg.length;
+			for(var c:int = 0;c < cl;c++) {
+				var colorBtn:ColorButton = new ColorButton();
+				colorBtn.colorIcon = _model.currentProduct.productColorImg[c].colorIcon;
+				trace(_model.currentProduct.productColorImg[c].colorIcon);
+				_colorPane.addChild(colorBtn);
+				this._colorPane.height += 76;
+			}
+			
 			_heatScreen =  new ProductHeatScreen();
 			_heatScreen.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			_heatScreen.scrollerProperties.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
@@ -81,12 +119,20 @@ package com.sanrenxing.tb.screens
 			this._container.addChild(_viewScreen);
 			
 			_screenVector.push(_colorScreen,_heatScreen,_viewScreen);
+			
+			enterEffect();
 		}
 		
 		override protected function draw():void
 		{
 			this._container.width = this.actualWidth;
 			this._container.height = this.actualHeight;
+			
+			this._controlPane.width = 400;
+			this._controlPane.x = -this._controlPane.width;
+			
+			this._colorPane.x = 750;
+			this._colorPane.y = -this._colorPane.height;
 			
 			_colorScreen.width = this.actualWidth;
 			_colorScreen.height = this.actualHeight;
@@ -97,6 +143,26 @@ package com.sanrenxing.tb.screens
 			_viewScreen.width = this.actualWidth;
 			_viewScreen.height = this.actualHeight;
 			_viewScreen.init();
+		}
+		
+		protected function enterEffect():void
+		{
+			var moveControlPaneTween:Tween = new Tween(this._controlPane,0.25);
+			moveControlPaneTween.animate("x",0);
+			Starling.juggler.delayCall(Starling.juggler.add,0.15,moveControlPaneTween);
+//			Starling.juggler.add(moveControlPaneTween);
+			
+			var moveColorPaneTween:Tween = new Tween(this._colorPane,0.3);
+			moveColorPaneTween.animate("y",0);
+			Starling.juggler.delayCall(Starling.juggler.add,0.35,moveColorPaneTween);
+			
+			
+//			var moveColorPaneTween:Tween = new Tween(
+		}
+		
+		protected function leaveEffect():void
+		{
+			
 		}
 		
 		private function onGestureSwipeHandler(event:GestureEvent):void
@@ -119,6 +185,24 @@ package com.sanrenxing.tb.screens
 		
 		private function attentionProduct(event:Event):void
 		{
+		}
+		
+		private function onTouchColorPaneHandler(event:TouchEvent):void
+		{
+			var touches:Vector.<Touch> = event.getTouches(stage);
+			
+			var len:int = touches.length;
+			
+			if(len>0&&touches[0].phase == "began") {
+				this._container.isGestureFlag = 3;
+			}
+			
+			for(var i:int=0;i<len;i++) {
+				if(touches[i].phase != "ended") {
+					return;
+				}
+			}
+			this._container.isGestureFlag = 0;
 		}
 		
 	}

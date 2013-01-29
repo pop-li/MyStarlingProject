@@ -2,11 +2,11 @@
 <data>
 	<productClass className="商务" classImg="class1">
 		<product productName="test1">
-			<color colorName="黑色" icon="" img="product1" />
-			<color colorName="红色" icon="" img="product2" />
-			<color colorName="橙色" icon="" img="product3" />
-			<color colorName="棕色" icon="" img="product4" />
-			<color colorName="蓝色" icon="" img="product5" />
+			<color colorName="黑色" colorIcon="BLACK" img="product1" />
+			<color colorName="红色" colorIcon="RED" img="product2" />
+			<color colorName="橙色" colorIcon="ORANGE" img="product3" />
+			<color colorName="棕色" colorIcon="BROWN" img="product4" />
+			<color colorName="蓝色" colorIcon="BLUE" img="product5" />
 			<picture img="product1" />
 			<picture img="product2" />
 			<picture img="product3" />
@@ -14,11 +14,11 @@
 			<picture img="product5" />
 		</product>
 		<product productName="test2">
-			<color colorName="红色" icon="" img="product2" />
-			<color colorName="黑色" icon="" img="product1" />
-			<color colorName="橙色" icon="" img="product3" />
-			<color colorName="棕色" icon="" img="product4" />
-			<color colorName="蓝色" icon="" img="product5" />
+			<color colorName="红色" colorIcon="RED" img="product2" />
+			<color colorName="黑色" colorIcon="BLACK" img="product1" />
+			<color colorName="橙色" colorIcon="ORANGE" img="product3" />
+			<color colorName="棕色" colorIcon="BROWN" img="product4" />
+			<color colorName="蓝色" colorIcon="BLUE" img="product5" />
 			<picture img="product1" />
 			<picture img="product2" />
 			<picture img="product3" />
@@ -26,11 +26,11 @@
 			<picture img="product5" />
 		</product>
 		<product productName="test3">
-			<color colorName="橙色" icon="" img="product3" />
-			<color colorName="黑色" icon="" img="product1" />
-			<color colorName="红色" icon="" img="product2" />
-			<color colorName="棕色" icon="" img="product4" />
-			<color colorName="蓝色" icon="" img="product5" />
+			<color colorName="橙色" colorIcon="ORANGE" img="product3" />
+			<color colorName="黑色" colorIcon="BLACK" img="product1" />
+			<color colorName="红色" colorIcon="RED" img="product2" />
+			<color colorName="棕色" colorIcon="BROWN" img="product4" />
+			<color colorName="蓝色" colorIcon="BLUE" img="product5" />
 			<picture img="product1" />
 			<picture img="product2" />
 			<picture img="product3" />
@@ -40,25 +40,25 @@
 	</productClass>
 	<productClass className="休闲" classImg="class1">
 		<product productName="test1">
-			<color colorName="黑色" icon="" img="product1" />
-			<color colorName="红色" icon="" img="product2" />
-			<color colorName="橙色" icon="" img="product3" />
-			<color colorName="棕色" icon="" img="product4" />
-			<color colorName="蓝色" icon="" img="product5" />
+			<color colorName="黑色" colorIcon="BLACK" img="product1" />
+			<color colorName="红色" colorIcon="RED" img="product2" />
+			<color colorName="橙色" colorIcon="ORANGE" img="product3" />
+			<color colorName="棕色" colorIcon="BROWN" img="product4" />
+			<color colorName="蓝色" colorIcon="BLUE" img="product5" />
 		</product>
 		<product productName="test2">
-			<color colorName="红色" icon="" img="product2" />
-			<color colorName="黑色" icon="" img="product1" />
-			<color colorName="橙色" icon="" img="product3" />
-			<color colorName="棕色" icon="" img="product4" />
-			<color colorName="蓝色" icon="" img="product5" />
+			<color colorName="红色" colorIcon="RED" img="product2" />
+			<color colorName="黑色" colorIcon="BLACK" img="product1" />
+			<color colorName="橙色" colorIcon="ORANGE" img="product3" />
+			<color colorName="棕色" colorIcon="BROWN" img="product4" />
+			<color colorName="蓝色" colorIcon="BLUE" img="product5" />
 		</product>
 		<product productName="test3">
-			<color colorName="橙色" icon="" img="product3" />
-			<color colorName="黑色" icon="" img="product1" />
-			<color colorName="红色" icon="" img="product2" />
-			<color colorName="棕色" icon="" img="product4" />
-			<color colorName="蓝色" icon="" img="product5" />
+			<color colorName="橙色" colorIcon="ORANGE" img="product3" />
+			<color colorName="黑色" colorIcon="BLACK" img="product1" />
+			<color colorName="红色" colorIcon="RED" img="product2" />
+			<color colorName="棕色" colorIcon="BROWN" img="product4" />
+			<color colorName="蓝色" colorIcon="BLUE" img="product5" />
 		</product>
 	</productClass>
 </data>

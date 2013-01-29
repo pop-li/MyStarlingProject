@@ -21,8 +21,14 @@ package com.sanrenxing.tb.components
 		 * 0为默认
 		 * 1为一手指move
 		 * 2为两手指zoom
+		 * 3为禁用
 		 */
 		private var _isGestureFlag:int = 0;
+		
+		public function set isGestureFlag(value:int):void
+		{
+			_isGestureFlag = value;
+		}
 		
 		public function ProductDetailContainer()
 		{
@@ -38,7 +44,7 @@ package com.sanrenxing.tb.components
 			var len:int = touches.length;
 			
 			if(len == 1) {
-				if(_isGestureFlag == 2) return;
+				if(_isGestureFlag == 2 || _isGestureFlag == 3) return;
 				
 				var touch:Touch = touches[0];
 				
