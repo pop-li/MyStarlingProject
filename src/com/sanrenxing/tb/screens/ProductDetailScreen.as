@@ -99,7 +99,7 @@ package com.sanrenxing.tb.screens
 			_colorScreen.addChild(_colorPane);
 			
 			var cl:int = _model.currentProduct.productColorImg.length;
-			for(var c:int = 0;c < cl;c++) {
+			for(var c:int = 0;c < 1;c++) {
 				var colorBtn:ColorButton = new ColorButton();
 				colorBtn.colorIcon = _model.currentProduct.productColorImg[c].colorIcon;
 				trace(_model.currentProduct.productColorImg[c].colorIcon);

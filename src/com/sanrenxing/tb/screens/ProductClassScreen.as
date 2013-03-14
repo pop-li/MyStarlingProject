@@ -5,7 +5,10 @@ package com.sanrenxing.tb.screens
 	import com.sanrenxing.tb.models.ModelLocator;
 	import com.sanrenxing.tb.vos.ProductClassVO;
 	
+	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	import feathers.controls.Screen;
 	import feathers.controls.ScrollContainer;
@@ -52,7 +55,7 @@ package com.sanrenxing.tb.screens
 			this._container.scrollerProperties.horizontalScrollPolicy = Scroller.SCROLL_POLICY_ON;
 //			this._container.scrollerProperties.verticalScrollPolicy = Scroller.SCROLL_POLICY_OFF;
 			this._container.scrollerProperties.snapScrollPositionsToPixels = true;
-//			this._container.nameList.add(CustomComponentTheme.MAIN_BACKGROUND);
+			this._container.nameList.add(CustomComponentTheme.MAIN_BACKGROUND);
 			this.addChild(this._container);
 			
 			var productClassBox:ProductClassBox;
@@ -65,6 +68,41 @@ package com.sanrenxing.tb.screens
 				this._container.addChild(productClassBox);
 			}
 			
+			
+			testLoader = new URLLoader();
+			testLoader.addEventListener(flash.events.Event.COMPLETE,loadTest);
+			testLoader.load(new URLRequest("assets/images/productDataNew.xml"));
+		}
+		
+		private var testLoader:URLLoader;
+		
+		private var resourceArr:Array = new Array();
+		
+		private function loadTest(e:flash.events.Event):void
+		{
+			var xmlList:XMLList = new XMLList(testLoader.data);
+			var classList:XMLList = xmlList.elements("productClass");
+			var classLength:int=classList.length();
+			for(var i:int=0;i<classLength;i++) {
+				var productClassXML:XML=classList[i];
+				var productClassVO :ProductClassVO = new ProductClassVO();
+				productClassVO.className = productClassXML.attribute("className");
+				productClassVO.classImg = productClassXML.attribute("classImg");
+				
+				trace((new Date()).getTime());
+				var loader:URLLoader = new URLLoader();
+				loader.addEventListener(flash.events.Event.COMPLETE,function (e:flash.events.Event):void
+				{
+					resourceArr.push("a");
+					
+					if(classLength == resourceArr.length) {
+						trace((new Date()).getTime());
+						trace("?");
+					}
+				});
+				loader.load(new URLRequest(productClassVO.classImg));
+				
+			}
 		}
 		
 		override protected function draw():void
@@ -110,7 +148,7 @@ package com.sanrenxing.tb.screens
 		protected function toProductListScreen(data:ProductClassVO):void
 		{
 			_model.currentProductClass = data;
-			this.dispatchEvent(new Event("toProductList"));
+			this.dispatchEvent(new starling.events.Event("toProductList"));
 		}
 	}
 }

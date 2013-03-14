@@ -65,6 +65,8 @@ package com.sanrenxing.tb.screens
 				frames.push(Assets.getTexture("AROUND_"+(i+1)));
 			}
 			productMovie = new MMovieClip(frames, 4);
+			productMovie.x = (this.width - productMovie.width)/2;
+			productMovie.y = (this.height - productMovie.height)/2;
 			
 			productMovie.stop();
 			
