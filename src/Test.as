@@ -112,6 +112,7 @@ package
 				initUI();
 			});
 			loader.load(new URLRequest("assets/images/productData.xml"));
+			
 		}
 		
 		private function initUI():void
